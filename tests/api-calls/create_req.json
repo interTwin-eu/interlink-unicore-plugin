@@ -1,0 +1,105 @@
+[{
+	"pod": {
+		"metadata": {
+			"name": "test-pod-cfg-cowsay-dciangot",
+			"namespace": "vk",
+			"uid": "2ee53299-7980-4016-8fef-a045282aecd1",
+			"resourceVersion": "120436",
+			"creationTimestamp": "2023-11-08T11:42:42Z",
+			"annotations": {
+				"unicoreToken": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJVSUQ9YS5tZW1vbkBmei1qdWVsaWNoLmRlIiwiYXVkIjoiQ049dW5pY29yZXgtaGRmbWwuZnotanVlbGljaC5kZSxPPUZvcnNjaHVuZ3N6ZW50cnVtIEp1ZWxpY2ggR21iSCxTVD1Ob3JkcmhlaW4tV2VzdGZhbGVuLEM9REUiLCJldGQiOiJ0cnVlIiwiaXNzIjoiQ049dW5pY29yZXgtaGRmbWwuZnotanVlbGljaC5kZSxPPUZvcnNjaHVuZ3N6ZW50cnVtIEp1ZWxpY2ggR21iSCxTVD1Ob3JkcmhlaW4tV2VzdGZhbGVuLEM9REUiLCJleHAiOjE3MTE1MzY4MTksImlhdCI6MTcxMTM2NDAxOX0.esLbV8Nx7gqYDVYjqMEVA9i-QR4FTgjgKs4f2WuWcRwZxfBS5ZDgqtgKGAyWThvwqqqcJPGA4h9lcHyFRaQ6MLIajlydgL2coMV6Uvdb4dThDo3DYUwJ6oqWUPi9XGdxpE9rmGnwta7aat5j3X5zZfsiOH4qcMPHJcCYwuRm5MmgFabC_p3GXYpyF8vfBpOlA5eqtQJaLwFBZtIKwGwzFhicxKykG4QFIIoQ0ewT_jD29JPFFh4LPV0IYxyi_r-eXYQaoXThj-ajWRke_BIkUPHaBXHpu1f2i6IPmRYIA8wD3MjlxZMMtgMy-HKOV9vCnOfrkwwH80hLwhatukRoyQ"
+			}
+		},
+		"spec": {
+			"volumes": [{
+				"name": "kube-api-access-pvhbn",
+				"projected": {
+					"sources": [{
+						"serviceAccountToken": {
+							"expirationSeconds": 3607,
+							"path": "token"
+						}
+					}, {
+						"configMap": {
+							"name": "kube-root-ca.crt",
+							"items": [{
+								"key": "ca.crt",
+								"path": "ca.crt"
+							}]
+						}
+					}, {
+						"downwardAPI": {
+							"items": [{
+								"path": "namespace",
+								"fieldRef": {
+									"apiVersion": "v1",
+									"fieldPath": "metadata.namespace"
+								}
+							}]
+						}
+					}],
+					"defaultMode": 420
+				}
+			}],
+			"containers": [{
+				"name": "cowsayo",
+				"image": "docker://ghcr.io/grycap/cowsay",
+				"command": ["/bin/sh"],
+				"args": ["-c", " which echo "],
+				"resources": {},
+				"volumeMounts": [{
+					"name": "kube-api-access-pvhbn",
+					"readOnly": true,
+					"mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+				}],
+				"terminationMessagePath": "/dev/termination-log",
+				"terminationMessagePolicy": "File",
+				"imagePullPolicy": "Always"
+			}],
+			"restartPolicy": "Never",
+			"terminationGracePeriodSeconds": 30,
+			"dnsPolicy": "ClusterFirst",
+			"nodeSelector": {
+				"kubernetes.io/hostname": "test-vk"
+			},
+			"serviceAccountName": "default",
+			"serviceAccount": "default",
+			"nodeName": "test-vk",
+			"securityContext": {},
+			"schedulerName": "default-scheduler",
+			"tolerations": [{
+				"key": "virtual-node.interlink/no-schedule",
+				"operator": "Exists"
+			}, {
+				"key": "node.kubernetes.io/not-ready",
+				"operator": "Exists",
+				"effect": "NoExecute",
+				"tolerationSeconds": 300
+			}, {
+				"key": "node.kubernetes.io/unreachable",
+				"operator": "Exists",
+				"effect": "NoExecute",
+				"tolerationSeconds": 300
+			}],
+			"priority": 0,
+			"enableServiceLinks": true,
+			"preemptionPolicy": "PreemptLowerPriority"
+		},
+		"status": {
+			"phase": "Pending",
+			"conditions": [{
+				"type": "PodScheduled",
+				"status": "True",
+				"lastProbeTime": null,
+				"lastTransitionTime": "2023-11-08T11:42:42Z"
+			}],
+			"qosClass": "BestEffort"
+		}
+	},
+	"container": [{
+		"name": "",
+		"configMaps": null,
+		"secrets": null,
+		"emptyDirs": null
+	}]
+}]
