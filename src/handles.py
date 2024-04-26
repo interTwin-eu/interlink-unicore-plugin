@@ -10,54 +10,10 @@ import pyunicore.credentials as uc_credentials
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--schedd-name", help="Schedd name", type=str, default="")
-parser.add_argument("--schedd-host", help="Schedd host", type=str, default="")
-parser.add_argument("--collector-host",
-                    help="Collector-host", type=str, default="")
-parser.add_argument("--cadir", help="CA directory", type=str, default="")
-parser.add_argument("--certfile", help="cert file", type=str, default="")
-parser.add_argument("--keyfile", help="key file", type=str, default="")
-parser.add_argument(
-    "--auth-method", help="Default authentication methods", type=str, default=""
-)
 parser.add_argument("--debug", help="Debug level", type=str, default="")
-parser.add_argument(
-    "--condor-config", help="Path to condor_config file", type=str, default=""
-)
-parser.add_argument("--proxy", help="Path to proxy file", type=str, default="")
-parser.add_argument(
-    "--dummy-job",
-    action="store_true",
-    help="Whether the job should be a real job or a dummy sleep job",
-)
 parser.add_argument("--port", help="Server port", type=int, default=8000)
 
 args = parser.parse_args()
-
-if args.schedd_name != "":
-    os.environ["_condor_SCHEDD_NAME"] = args.schedd_name
-if args.schedd_host != "":
-    os.environ["_condor_SCHEDD_HOST"] = args.schedd_host
-if args.collector_host != "":
-    os.environ["_condor_COLLECTOR_HOST"] = args.collector_host
-if args.cadir != "":
-    os.environ["_condor_AUTH_SSL_CLIENT_CADIR"] = args.cadir
-if args.certfile != "":
-    os.environ["_condor_AUTH_SSL_CLIENT_CERTFILE"] = args.certfile
-if args.keyfile != "":
-    os.environ["_condor_AUTH_SSL_CLIENT_KEYFILE"] = args.keyfile
-if args.auth_method != "":
-    os.environ["_condor_SEC_DEFAULT_AUTHENTICATION_METHODS"] = args.auth_method
-if args.debug != "":
-    os.environ["_condor_TOOL_DEBUG"] = args.debug
-if args.condor_config != "":
-    os.environ["CONDOR_CONFIG"] = args.condor_config
-if args.proxy != "":
-    os.environ["X509_USER_PROXY"] = args.proxy
-if args.proxy != "":
-    os.environ["X509_USER_CERT"] = args.proxy
-dummy_job = args.dummy_job
-
 
 global JID
 JID = []
